@@ -1,0 +1,63 @@
+<html>
+<head>
+    <title>StarWars API Demo</title>
+    <link rel="icon" href="https://vuejs.org/images/logo.png" type="image/png">
+    <link rel="Stylesheet" href="style.css" type="text/css">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <div id="app">
+        <header>Star Wars Movies</header>
+        <aside id="sidebar">
+            <character-profile :character="favoriteCharacters.most"></character-profile>
+            <character-profile :character="favoriteCharacters.least"></character-profile>
+            <crawl-chart :data=openingCrawlData v-if="fetchedData.films"></crawl-chart>
+        </aside>
+        <main id="main">
+            <div class="movies">
+                <div class="movieCard" v-for="film in filmPairs" v-if="fetchedData.films">
+                    <movie-info :movie=film[0]></movie-info>
+                    <movie-info :movie=film[1] v-if=film[1] ></movie-info>
+                </div>
+                <div class="movieCard loading" v-if="!fetchedData.films.length">loading...</div>
+            </div>
+        </main>
+    </div>
+
+    <script type="text/x-template" id="movieInfo">
+        <div class="movieInfo">
+            <h3>{{movie.title}}</h3>
+            <div class="moviePoster"
+                :style="{ 'background-image': 'url(' + movie.posterUrl + ')' }"
+            ></div>
+            <div class="directedBy">Directed by {{movie.director}}</div>
+            <div class="mainCharacters" v-if="fetchedCharacters.length">
+              <strong>Featuring:</strong>
+              <div>{{ getCharacterNames.join(', ')}} </div>
+            </div>
+            <div class="loading" v-if="!fetchedCharacters.length">loading...</div>
+        </div>
+    </script>
+
+    <script type="text/x-template" id="crawlChart">
+        <div class="openingCrawl chartContainer">
+            <h4>Opening Crawl Word Count</h4>
+            <div class="chart" :data-max="getChartHeight" :data-min="0" v-if="data.length">
+                <div class="bar" v-for="bar in data"
+                    :style="{ 'height': bar.length + 'px'}"
+                    :data-label="bar.label"
+                    :data-value="bar.length">
+                    <span class="value">{{bar.length}}</span>
+                    <div class="crawlContainer">
+                      <div class="crawlStage">
+                        <pre class="crawl">{{bar.text}}</pre>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="loading" v-if="!data.length">loading...</div>
+        </div>
+    </script>
+</body>
+</html>

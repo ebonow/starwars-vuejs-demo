@@ -1,0 +1,204 @@
+body {
+    font-family: sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+  }
+  
+  header {
+    background: #333;
+    padding: 1em;
+    margin-bottom: .5em;
+    font-size: 2em;
+    font-family: fantasy;
+    color: #ddd;
+    text-shadow: 2px 2px 1px #000;
+    text-align: center;
+  }
+  
+  aside {
+    margin: 0 1em;
+    width: 300px;
+    float: left;
+    clear: both;
+  }
+  
+  aside > * {
+    border: 1px solid #000;
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    border-radius: 2px;
+    background-color: #aaa;
+    box-shadow: 2px 2px 5px;
+  }
+  
+  main {
+    margin-left: 330px;
+  }
+  
+  .movieCard {
+    border: 1px solid #000;
+    padding: 10px;
+    display: inline-block;
+    margin: 0 1em 1em 0;
+    border-radius: 2px;
+    vertical-align: top;
+    background-color: #aaa;
+    box-shadow: 2px 2px 5px;
+  }
+    .movieCard.loading {
+      position: fixed;
+      top: 200px;
+      left: 50%;
+      padding: 3em;
+      z-index: 2;
+    }
+  
+  .movieInfo {
+    float: left;
+    padding: 5px;
+    font-size: 12px;
+  }
+  
+  .movieInfo h3 {
+    text-align: center;
+  }
+  .moviePoster {
+    font-size: 200px;
+    width: 1em;
+    height: 1.5em;
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
+  .directedBy {
+    line-height: 1.5em;
+    font-style: italic;
+  }
+  .mainCharacters {
+    margin-top: 1em;
+  }
+  
+  .chart {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-bottom: 1em;
+    margin-left: 1em;
+  }
+  
+    .chart::before, .chart::after {
+      position: absolute;
+      left: -1.2em;
+      font-size: 10px;
+    }
+  
+    .chart::before {
+      content: attr(data-max);
+      top: -.5em;
+    }
+  
+    .chart::after {
+      content: attr(data-min);
+      bottom: -.5em;
+    }
+  
+  .chart .bar {
+    background-color: cornflowerblue;
+    width: 20px;
+    cursor: pointer;
+    text-align: center;
+    transition: height .5s;
+  }
+  
+    .chart .bar:hover {
+      background-color: blue;
+    }
+  
+    .chart .bar::before {
+      content: attr(data-label);
+      position: absolute;
+      bottom: -2em;
+      font-size: 10px;
+      margin-left: -1em;
+    }
+  
+  .chart .bar .value {
+    color: blue;
+    display: block;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 14px;
+    transition: margin .2s;
+  }
+  
+    .chart .bar:hover .value {
+      margin-top: -1.1em;
+    }
+  
+  /*Container for crawl text*/
+  .crawlContainer {
+    display: none;
+    background-color: black;
+    color: #feda4a;
+    text-overflow: clip;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 150%;
+    height: 10em;
+  }
+    /*Transparent gradient for fading text*/
+    .crawlContainer::after{
+      content:'';
+      position:absolute;
+      top:0;
+      bottom:0;
+      left:0;
+      right:0;
+      background:linear-gradient(top,rgba(0,0,0,1),rgba(0,0,0,0) 100%);
+      background:linear-gradient(to bottom,rgba(0,0,0,1),rgba(0,0,0,0) 100%);
+      pointer-events:none;
+    }
+  
+  /*Crawl stage to set 3d perspective*/
+  .crawlStage {
+    text-align: justify;
+    line-height: 1.5em;
+    height: 8em;
+    transform: perspective(60px) rotateX(10deg);
+    transform-origin: 50% 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  /*Actual text used - real crawl text is justified but this is center aligned to perserve line breaks*/
+  .crawl {
+    position: relative;
+    font-size: 1.2em;
+    font-family: sans-serif;
+    text-align: center;
+    padding-top: 7em;
+  }
+  
+  .bar:hover .crawlContainer{
+    display: block;
+  }
+  
+  .bar:hover .crawl {
+    animation: crawl 20s linear;
+  }
+  
+  @keyframes crawl {
+    0% { margin-top: 0; }
+    100% { margin-top: -36em; }
+  }
+  
